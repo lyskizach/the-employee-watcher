@@ -1,15 +1,10 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
-
-// const express = require('express');
-// const PORT = process.env.PORT || 3001;
-// const app = express();
-// app.use(express.urlencoded({ extended: false }));
-// app.use(express.json());
+const res = require('express/lib/response');
 
 const db = mysql.createConnection(
     {
-        // use .env to login
+        // dont push this data up
         host: 'localhost',
         user: 'root',
         password: '',
@@ -71,21 +66,21 @@ prompt();
 
 // function to view all departments
 function viewDept() {
-    db.query('SELECT * FROM company_db.departments', res => {
+    db.query('SELECT * FROM company_db.departments', (err, res) => {
         return console.table(res)
     });
 };
 
 // function to display all roles
 function viewRole() {
-    db.query('SELECT * FROM company_db.roles', res => {
+    db.query('SELECT * FROM company_db.roles', (err, res) => {
         return console.table(res)
     });
 };
 
 // function to view all employees
 function viewEmp() {
-    db.query('SELECT * FROM company_db.employees', res => {
+    db.query('SELECT * FROM company_db.employees', (err, res) => {
         return console.table(res)
     });
 };
@@ -103,13 +98,13 @@ function addDept() {
         message: 'What is the ID of the new department?'
     })
     .then(function(response) {
-        db.query(`INSERT INTO departments (dept_name, id)`, [response.new_dept, response.new_dept_id], (err, results) => {
+        db.query(`INSERT INTO departments (dept_name, id)`, [response.new_dept, response.new_dept_id], (err, res) => {
             if(err) {
                 console.log(err)
             }
             else {
                 // console.log("Successfully added new department!")
-                return console.table(results)
+                return console.table(res)
             };
         });
     });
@@ -136,12 +131,12 @@ function addRole() {
         message: 'What is the salary for this job?'
     })
     .then(function(response) {
-        db.query(`INSERT INTO roles (job_title, id, dept_id, salary)`, [response.new_job_title, response.new_job_id, response.existing_dept_id, response.new_salary], (err, results) => {
+        db.query(`INSERT INTO roles (job_title, id, dept_id, salary)`, [response.new_job_title, response.new_job_id, response.existing_dept_id, response.new_salary], (err, res) => {
             if(err) {
                 console.log(err)
             }
             else {
-                return console.table(results)
+                return console.table(res)
             };
         });
     });
@@ -172,12 +167,12 @@ function addEmp() {
         message: 'What is the ID of the employees referring manager?'
     })
     .then(function(response) {
-        db.query(`INSERT INTO employees (id, first_name, last_name, role_id, managers_id)`, [response.id, response.first_name, response.last_name, response.job_title, response.managers_id], (err, results) => {
+        db.query(`INSERT INTO employees (id, first_name, last_name, role_id, managers_id)`, [response.id, response.first_name, response.last_name, response.job_title, response.managers_id], (err, res) => {
             if(err) {
                 console.log(err)
             }
             else {
-                return console.table(results)
+                return console.table(res)
             };
         });
     });
@@ -198,12 +193,12 @@ function updateEmp() {
             message: 'What is the new role ID of this employee?'
         })
         .then(function(response) {
-            db.query(`UPDATE employees SET role_id`, [response.new_job], (err, results) => {
+            db.query(`UPDATE employees SET role_id`, [response.new_job], (err, res) => {
                 if(err) {
                     console.log(err)
                 }
                 else {
-                    return console.table(results)
+                    return console.table(res)
                 };
             })
         })
