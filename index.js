@@ -2,6 +2,29 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const express = require('express');
 
+const PORT = process.env.PORT || 3001;
+const app = express();
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+const db = mysql.createConnection(
+    {
+        // use .env to login
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'company_db'
+    },
+    console.log('Connected to the company_db database')
+);
+
+db.connect((err) => {
+    if(err) {
+        console.log(err);
+    };
+});
+
 function prompt() {
     inquirer
     .prompt({
@@ -45,6 +68,8 @@ function prompt() {
     })
 };
 
+prompt();
+
 // function to view all departments
 function viewDept();
 
@@ -65,3 +90,7 @@ function addEmp();
 
 // function to update/change employee role
 function updateEmp();
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
