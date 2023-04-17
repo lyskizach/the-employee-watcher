@@ -1,12 +1,11 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
-const express = require('express');
 
-const PORT = process.env.PORT || 3001;
-const app = express();
-
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+// const express = require('express');
+// const PORT = process.env.PORT || 3001;
+// const app = express();
+// app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
 
 const db = mysql.createConnection(
     {
@@ -166,14 +165,14 @@ function addEmp() {
     }, {
         name: 'job_title',
         type: 'input',
-        message: 'What is the employees job title?'
+        message: 'What is the employees role ID?'
     }, {
         name: 'managers_id',
         type: 'input',
         message: 'What is the ID of the employees referring manager?'
     })
     .then(function(response) {
-        db.query(`INSERT INTO employees (id, first_name, last_name, job_title, managers_id)`, [response.id, response.first_name, response.last_name, response.job_title, response.managers_id], (err, results) => {
+        db.query(`INSERT INTO employees (id, first_name, last_name, role_id, managers_id)`, [response.id, response.first_name, response.last_name, response.job_title, response.managers_id], (err, results) => {
             if(err) {
                 console.log(err)
             }
@@ -192,14 +191,14 @@ function updateEmp() {
             name: 'chosen_emp',
             type: 'list',
             message: 'Which employees data would you like to update?',
-            choices: res.map(e => e.id + ' - ' + e.first_name + ' ' + e.last_name + '...working as ' + e.job_title)
+            choices: res.map(e => e.id + ' - ' + e.first_name + ' ' + e.last_name)
         }, {
             name: 'new_job',
             type: 'input',
-            message: 'What is the new job of this employee?'
+            message: 'What is the new role ID of this employee?'
         })
         .then(function(response) {
-            db.query(`UPDATE employees SET job_title`, [response.new_job], (err, results) => {
+            db.query(`UPDATE employees SET role_id`, [response.new_job], (err, results) => {
                 if(err) {
                     console.log(err)
                 }
@@ -210,7 +209,3 @@ function updateEmp() {
         })
     })
 };
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });

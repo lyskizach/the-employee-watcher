@@ -25,7 +25,11 @@ CREATE TABLE employees (
     id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    job_title VARCHAR(30) NOT NULL,
+    role_id INT NOT NULL,
+    -- FOREIGN KEY (dept_id)
+    -- REFERENCES departments(id),
+    -- FOREIGN KEY (salary)
+    -- REFERENCES roles(id),
     -- dept_id INT NOT NULL,
     -- salary DECIMAL(7,2) NOT NULL,
     managers_id INT NOT NULL,
