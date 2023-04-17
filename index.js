@@ -2,9 +2,9 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const res = require('express/lib/response');
 
+// MAKE SURE PASSWORD ISNT HERE BEFORE PUSHING
 const db = mysql.createConnection(
     {
-        // dont push this data up
         host: 'localhost',
         user: 'root',
         password: '',
@@ -68,21 +68,24 @@ prompt();
 function viewDept() {
     db.query('SELECT * FROM company_db.departments', (err, res) => {
         return console.table(res)
-    });
+    })
+    prompt();
 };
 
 // function to display all roles
 function viewRole() {
     db.query('SELECT * FROM company_db.roles', (err, res) => {
         return console.table(res)
-    });
+    })
+    prompt();
 };
 
 // function to view all employees
 function viewEmp() {
     db.query('SELECT * FROM company_db.employees', (err, res) => {
         return console.table(res)
-    });
+    })
+    prompt();
 };
 
 // function to add department
@@ -106,7 +109,8 @@ function addDept() {
                 // console.log("Successfully added new department!")
                 return console.table(res)
             };
-        });
+        })
+        prompt();
     });
 };
 
@@ -139,6 +143,7 @@ function addRole() {
                 return console.table(res)
             };
         });
+        prompt();
     });
 };
 
@@ -175,6 +180,7 @@ function addEmp() {
                 return console.table(res)
             };
         });
+        prompt();
     });
 };
 
@@ -200,7 +206,8 @@ function updateEmp() {
                 else {
                     return console.table(res)
                 };
-            })
-        })
-    })
+            });
+            prompt();
+        });
+    });
 };
