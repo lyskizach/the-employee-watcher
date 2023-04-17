@@ -26,8 +26,8 @@ CREATE TABLE employees (
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     job_title VARCHAR(30) NOT NULL,
-    dept_id INT NOT NULL,
-    salary DECIMAL(7,2) NOT NULL,
+    -- dept_id INT NOT NULL,
+    -- salary DECIMAL(7,2) NOT NULL,
     managers_id INT NOT NULL,
     PRIMARY KEY(id)
 );
