@@ -185,7 +185,31 @@ function addEmp() {
 };
 
 // function to update/change employee role
-function updateEmp();
+function updateEmp() {
+    db.query(`SELECT * FROM company_db.employees`, (err, res) => {
+        inquirer
+        .prompt({
+            name: 'chosen_emp',
+            type: 'list',
+            message: 'Which employees data would you like to update?',
+            choices: res.map(e => e.id + ' - ' + e.first_name + ' ' + e.last_name + '...working as ' + e.job_title)
+        }, {
+            name: 'new_job',
+            type: 'input',
+            message: 'What is the new job of this employee?'
+        })
+        .then(function(response) {
+            db.query(`UPDATE employees SET job_title`, [response.new_job], (err, results) => {
+                if(err) {
+                    console.log(err)
+                }
+                else {
+                    return console.table(results)
+                };
+            })
+        })
+    })
+};
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
