@@ -71,18 +71,48 @@ function prompt() {
 prompt();
 
 // function to view all departments
-function viewDept();
+function viewDept() {
+    db.query('SELECT * FROM company_db.departments', res => {
+        return console.table(res)
+    });
+};
 
 // function to display all roles
-function viewRole();
+function viewRole() {
+    db.query('SELECT * FROM company_db.roles', res => {
+        return console.table(res)
+    });
+};
 
 // function to view all employees
-function viewEmp();
+function viewEmp() {
+    db.query('SELECT * FROM company_db.employees', res => {
+        return console.table(res)
+    });
+};
 
 // function to add department
-function addDept();
+function addDept() {
+    inquirer
+    .prompt({
+        name: 'new_dept',
+        type: 'input',
+        message: 'What is the name of the department?'
+    })
+    .then(function(response) {
+        db.query(`INSERT INTO departments (new_dept) VALUES (?)`, [response.new_dept], (err, results) => {
+            if(err) {
+                console.log(err)
+            }
+            else {
+                console.log("Successfully added new department!")
+                return console.table(results)
+            };
+        });
+    });
+};
 
-// functiom to add role
+// function to add role
 function addRole();
 
 // function to add employee
