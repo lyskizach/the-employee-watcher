@@ -39,7 +39,7 @@ function prompt() {
                 addEmp();
                 break;
             case 'Update an employee role':
-                updateEmpt();
+                updateEmp();
                 break;
         }
     })
