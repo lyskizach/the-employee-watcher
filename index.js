@@ -91,7 +91,8 @@ function viewEmp() {
 // function to add department
 function addDept() {
     inquirer
-    .prompt({
+    .prompt([
+        {
         name: 'new_dept',
         type: 'input',
         message: 'What is the name of the department?'
@@ -99,9 +100,10 @@ function addDept() {
         name: 'new_dept_id',
         type: 'input',
         message: 'What is the ID of the new department?'
-    })
+    }
+    ])
     .then(function(response) {
-        db.query(`INSERT INTO departments (dept_name, id)`, [response.new_dept, response.new_dept_id], (err, res) => {
+        db.query(`INSERT INTO departments(dept_name, id) VALUE(?, ?)`, [response.new_dept, response.new_dept_id], (err, res) => {
             if(err) {
                 console.log(err)
             }
@@ -117,7 +119,8 @@ function addDept() {
 // function to add role
 function addRole() {
     inquirer
-    .prompt({
+    .prompt([
+        {
         name: 'new_job_title',
         type: 'input',
         message: 'What is the name of the new job?'
@@ -133,9 +136,10 @@ function addRole() {
         name: 'new_salary',
         type: 'input',
         message: 'What is the salary for this job?'
-    })
+    }
+    ])
     .then(function(response) {
-        db.query(`INSERT INTO roles (job_title, id, dept_id, salary)`, [response.new_job_title, response.new_job_id, response.existing_dept_id, response.new_salary], (err, res) => {
+        db.query(`INSERT INTO roles(job_title, id, dept_id, salary) VALUE(?, ?, ?, ?)`, [response.new_job_title, response.new_job_id, response.existing_dept_id, response.new_salary], (err, res) => {
             if(err) {
                 console.log(err)
             }
@@ -147,12 +151,11 @@ function addRole() {
     });
 };
 
-// INQUIRER NOT WAITING TO SUBMIT VALUES FOR EACH QUESTION
-
 // function to add employee
 function addEmp() {
     inquirer
-    .prompt({
+    .prompt([
+        {
         name: 'id',
         type: 'input',
         message: 'What is the new ID for this employee?'
@@ -172,9 +175,10 @@ function addEmp() {
         name: 'managers_id',
         type: 'input',
         message: 'What is the ID of the employees referring manager?'
-    })
+    }
+    ])
     .then(function(response) {
-        db.query(`INSERT INTO employees (id, first_name, last_name, role_id, managers_id) VALUES (?, ?, ?, ?)`, [response.id, response.first_name, response.last_name, response.job_title, response.managers_id], (err, res) => {
+        db.query(`INSERT INTO employees(id, first_name, last_name, role_id, managers_id) VALUES(?, ?, ?, ?, ?)`, [response.id, response.first_name, response.last_name, response.job_title, response.managers_id], (err, res) => {
             if(err) {
                 console.log(err)
             }
@@ -190,7 +194,8 @@ function addEmp() {
 function updateEmp() {
     db.query(`SELECT * FROM company_db.employees`, (err, res) => {
         inquirer
-        .prompt({
+        .prompt([
+            {
             name: 'chosen_emp',
             type: 'list',
             message: 'Which employees data would you like to update?',
@@ -199,7 +204,8 @@ function updateEmp() {
             name: 'new_job',
             type: 'input',
             message: 'What is the new role ID of this employee?'
-        })
+        }]
+        )
         .then(function(response) {
             db.query(`UPDATE employees SET role_id`, [response.new_job], (err, res) => {
                 if(err) {

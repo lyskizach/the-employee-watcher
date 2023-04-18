@@ -5,24 +5,24 @@ CREATE DATABASE company_db;
 USE company_db;
 
 CREATE TABLE departments (
-    dept_name VARCHAR(30),
-    id INT,
+    dept_name VARCHAR(30) NOT NULL,
+    id INT NOT NULL,
     PRIMARY KEY(id)
 );
 
 CREATE TABLE roles (
     job_title VARCHAR(30),
-    id INT,
-    dept_id INT,
-    salary DECIMAL(7,2),
+    id INT NOT NULL,
+    dept_id INT NOT NULL,
+    salary DECIMAL(5,2) NOT NULL,
     PRIMARY KEY(id) 
 );
 
 CREATE TABLE employees (
-    id INT,
-    first_name VARCHAR(30),
-    last_name VARCHAR(30),
-    role_id INT,
+    id INT NOT NULL,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+    role_id INT NOT NULL,
     -- dept_id INT NOT NULL,
     -- salary DECIMAL(7,2) NOT NULL,
     managers_id INT,
