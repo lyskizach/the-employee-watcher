@@ -147,6 +147,8 @@ function addRole() {
     });
 };
 
+// INQUIRER NOT WAITING TO SUBMIT VALUES FOR EACH QUESTION
+
 // function to add employee
 function addEmp() {
     inquirer
@@ -172,7 +174,7 @@ function addEmp() {
         message: 'What is the ID of the employees referring manager?'
     })
     .then(function(response) {
-        db.query(`INSERT INTO employees (id, first_name, last_name, role_id, managers_id)`, [response.id, response.first_name, response.last_name, response.job_title, response.managers_id], (err, res) => {
+        db.query(`INSERT INTO employees (id, first_name, last_name, role_id, managers_id) VALUES (?, ?, ?, ?)`, [response.id, response.first_name, response.last_name, response.job_title, response.managers_id], (err, res) => {
             if(err) {
                 console.log(err)
             }

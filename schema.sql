@@ -4,32 +4,25 @@ CREATE DATABASE company_db;
 
 USE company_db;
 
--- must include department names and department ids
 CREATE TABLE departments (
     dept_name VARCHAR(30) NOT NULL,
-    id INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL,
     PRIMARY KEY(id)
 );
 
--- must include job title, role id, the department that role belongs to, and the salary for that role
 CREATE TABLE roles (
     job_title VARCHAR(30) NOT NULL,
-    id INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL,
     dept_id INT NOT NULL,
     salary DECIMAL(7,2) NOT NULL,
     PRIMARY KEY(id) 
 );
 
--- must include employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
 CREATE TABLE employees (
-    id INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     role_id INT NOT NULL,
-    -- FOREIGN KEY (dept_id)
-    -- REFERENCES departments(id),
-    -- FOREIGN KEY (salary)
-    -- REFERENCES roles(id),
     -- dept_id INT NOT NULL,
     -- salary DECIMAL(7,2) NOT NULL,
     managers_id INT NOT NULL,
