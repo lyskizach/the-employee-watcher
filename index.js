@@ -67,25 +67,40 @@ prompt();
 // function to view all departments
 function viewDept() {
     db.query('SELECT * FROM company_db.departments', (err, res) => {
-        return console.table(res)
-    })
-    prompt();
+        if(err) {
+            console.log(err);
+            prompt();
+        } else {
+            console.table(res);
+            prompt();
+        }
+    });
 };
 
 // function to display all roles
 function viewRole() {
     db.query('SELECT * FROM company_db.roles', (err, res) => {
-        return console.table(res)
-    })
-    prompt();
+        if(err) {
+            console.log(err);
+            prompt();
+        } else {
+            console.table(res);
+            prompt();
+        }
+    });
 };
 
 // function to view all employees
 function viewEmp() {
     db.query('SELECT * FROM company_db.employees', (err, res) => {
-        return console.table(res)
-    })
-    prompt();
+        if(err) {
+            console.log(err);
+            prompt();
+        } else {
+            console.table(res);
+            prompt();
+        }
+    });
 };
 
 // function to add department
@@ -105,14 +120,15 @@ function addDept() {
     .then(function(response) {
         db.query(`INSERT INTO departments(dept_name, id) VALUE(?, ?)`, [response.new_dept, response.new_dept_id], (err, res) => {
             if(err) {
-                console.log(err)
+                console.log(err);
+                prompt();
             }
             else {
                 // console.log("Successfully added new department!")
-                return console.table(res)
+                console.table(res);
+                prompt();
             };
-        })
-        prompt();
+        });
     });
 };
 
@@ -141,13 +157,14 @@ function addRole() {
     .then(function(response) {
         db.query(`INSERT INTO roles(job_title, id, dept_id, salary) VALUE(?, ?, ?, ?)`, [response.new_job_title, response.new_job_id, response.existing_dept_id, response.new_salary], (err, res) => {
             if(err) {
-                console.log(err)
+                console.log(err);
+                prompt();
             }
             else {
-                return console.table(res)
+                console.table(res);
+                prompt();
             };
         });
-        prompt();
     });
 };
 
@@ -180,13 +197,14 @@ function addEmp() {
     .then(function(response) {
         db.query(`INSERT INTO employees(id, first_name, last_name, role_id, managers_id) VALUES(?, ?, ?, ?, ?)`, [response.id, response.first_name, response.last_name, response.job_title, response.managers_id], (err, res) => {
             if(err) {
-                console.log(err)
+                console.log(err);
+                prompt();
             }
             else {
-                return console.table(res)
+                console.table(res);
+                prompt();
             };
         });
-        prompt();
     });
 };
 
@@ -199,7 +217,7 @@ function updateEmp() {
             name: 'chosen_emp',
             type: 'list',
             message: 'Which employees data would you like to update?',
-            choices: res.map(e => e.id + ' - ' + e.first_name + ' ' + e.last_name)
+            choices: res.map(res => res.id + ' - ' + res.first_name + ' ' + res.last_name)
         }, {
             name: 'new_job',
             type: 'input',
@@ -209,13 +227,14 @@ function updateEmp() {
         .then(function(response) {
             db.query(`UPDATE employees SET role_id`, [response.new_job], (err, res) => {
                 if(err) {
-                    console.log(err)
+                    console.log(err);
+                    prompt();
                 }
                 else {
-                    return console.table(res)
+                    onsole.table(res);
+                    prompt();
                 };
             });
-            prompt();
         });
     });
 };

@@ -23,7 +23,7 @@
   N/A
 
   ## Contribution
-  N/A
+  I was having an issue with the display of the mysql tables inside of the terminal, and recieved help from AskBCS Learning Assistant to resolve this issue. I needed to have my `prompt();` within the arrow function of each of my functions that manipulate the mysql data.
 
   ## Testing
   N/A
@@ -32,4 +32,3 @@
   My Github Username: lyskizach  
   My Github Profile: https://github.com/lyskizach  
   For additional questions, contact me by email at: lyski.zach@icloud.com  
-  
