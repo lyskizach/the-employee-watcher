@@ -32,7 +32,7 @@ function prompt() {
             'Add a department',
             'Add a role',
             'Add an employee',
-            'Update an employees role'
+            'Update an employee role'
         ]
     })
     .then(function(response) {
@@ -210,31 +210,28 @@ function addEmp() {
 
 // function to update/change employee role
 function updateEmp() {
-    db.query(`SELECT * FROM company_db.employees`, (err, res) => {
-        inquirer
-        .prompt([
-            {
-            name: 'chosen_emp',
-            type: 'list',
-            message: 'Which employees data would you like to update?',
-            choices: res.map(res => res.id + ' - ' + res.first_name + ' ' + res.last_name)
-        }, {
-            name: 'new_job',
-            type: 'input',
-            message: 'What is the new role ID of this employee?'
-        }]
-        )
-        .then(function(response) {
-            db.query(`UPDATE employees SET role_id`, [response.new_job], (err, res) => {
-                if(err) {
-                    console.log(err);
-                    prompt();
-                }
-                else {
-                    onsole.table(res);
-                    prompt();
-                };
-            });
+    inquirer
+    .prompt([
+    {
+        name: 'chosen_emp',
+        type: 'input',
+        message: 'Whats the employees ID that you would like to update?'
+    }, {
+        name: 'new_job',
+        type: 'input',
+        message: 'What is the new role ID of this employee?'
+    }
+    ])
+    .then(function(response) {
+        db.query(`UPDATE employees SET role_id = ? WHERE id = ?`, [response.new_job, response.chosen_emp], (err, res) => {
+            if(err) {
+                console.log(err);
+                prompt();
+            }
+            else {
+                console.table(res);
+                prompt();
+            };
         });
     });
 };
